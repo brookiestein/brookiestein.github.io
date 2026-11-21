@@ -241,3 +241,37 @@
     });
     document.addEventListener('scroll', hide, { passive: true });
 })();
+
+(() => {
+    const button = document.getElementById('copy-email');
+    const status = document.getElementById('copy-status');
+    if (!button || !status)
+	return;
+
+    let timer;
+    button.addEventListener('click', async () => {
+	const email = button.dataset.email;
+	let ok = false;
+
+	try {
+	    await navigator.clipboard.writeText(email);
+	    ok = true;
+	} catch (e) {
+	    const ta = document.createElement('textarea');
+	    ta.value = email;
+	    ta.style.position = 'fixed';
+	    ta.style.opacity = '0';
+	    document.body.appendChild(ta);
+	    ta.select();
+	    try {
+		ok = document.execCommand('copy');
+	    } catch (e2) {
+	    }
+	    ta.remove();
+	}
+
+	status.textContent = ok ? 'Copied' : 'Copy failed';
+	clearTimeout(timer);
+	timer = setTimeout(() => { status.textContent = ''; }, 2000);
+    });
+})();
