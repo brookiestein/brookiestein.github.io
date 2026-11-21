@@ -7,7 +7,7 @@
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const phrases = [
-	'I build apps for Linux, and Windows.',
+	'I build apps for Linux and Windows.',
 	'I write Qt and GTK apps that feel native.',
 	'I lock down networks with nftables.',
 	'I audit processes and hunt root causes.',
