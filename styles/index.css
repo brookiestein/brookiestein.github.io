@@ -183,3 +183,20 @@ body { transition: background-color .2s, color .2s; }
     font: 400 .85rem/1.4 "Literata", Georgia, serif;
     pointer-events: none;
 }
+
+.actions { margin: 2rem 0 0; }
+.btn {
+    display: inline-block;
+    font: 700 1rem/1 "Bricolage Grotesque", system-ui, sans-serif;
+    padding: .85rem 1.25rem;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--bg);
+    text-decoration: none;
+    transition: background-color .15s, color .15s;
+}
+.btn:hover { background: transparent; color: var(--accent); }
+.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.project .links { margin: .75rem 0 0; font-size: .95rem; }

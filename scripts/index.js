@@ -7,7 +7,7 @@
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const phrases = [
-	'I build Linux desktop tools in C and C++.',
+	'I build apps for Linux, and Windows.',
 	'I write Qt and GTK apps that feel native.',
 	'I lock down networks with nftables.',
 	'I audit processes and hunt root causes.',
@@ -181,7 +181,8 @@
 	'nftables': 'The Linux kernel\'s firewall framework, the successor to iptables.',
 	'WireGuard': 'A fast, modern VPN protocol built into the Linux kernel.',
 	'systemd': 'The service manager that starts and supervises daemons on most Linux systems.',
-	'Shell': 'Scripts that automate tasks from the command line.'
+	'Shell': 'Scripts that automate tasks from the command line.',
+	'Windows': 'QBitMPlayer ships a ready-to-run .exe in its GitHub releases.',
     };
 
     let target = null;
