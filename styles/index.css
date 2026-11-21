@@ -38,6 +38,7 @@ h1 {
   letter-spacing: -0.03em;
   margin: 0;
   max-width: 16ch;
+  min-height: 3.1em;
 }
 .lede { max-width: 34rem; margin: 1.75rem 0 0; color: var(--muted); }
 .cursor {
@@ -93,4 +94,14 @@ footer small { color: var(--muted); }
   html { scroll-behavior: auto; }
   .project { animation: none; }
   .cursor { animation: none; }
+}
+
+@media (max-width: 40rem) {
+    h1 {
+	min-height: 4.2em;
+    }
+}
+
+.cursor.busy {
+    animation: none;
 }
