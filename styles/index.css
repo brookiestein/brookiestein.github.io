@@ -64,7 +64,7 @@ h2 { font: 700 1.5rem/1.2 "Bricolage Grotesque", system-ui, sans-serif; margin: 
 .project:nth-child(3) { animation-delay: .16s; }
 .project:nth-child(4) { animation-delay: .24s; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.project h3 { font: 700 1.6rem/1.2 "Bricolage Grotesque", system-ui, sans-serif; margin: 0; letter-spacing: -0.01em; }
+.project h3 { font: 700 1.5rem/1.2 "Bricolage Grotesque", system-ui, sans-serif; margin: 0; letter-spacing: -0.01em; }
 .project h3 a { color: var(--ink); text-decoration: none; }
 .project h3 a:hover { color: var(--accent); text-decoration: underline; }
 .project p { margin: 0 0 .75rem; max-width: 38rem; }
@@ -73,8 +73,8 @@ h2 { font: 700 1.5rem/1.2 "Bricolage Grotesque", system-ui, sans-serif; margin: 
   font: 400 .85rem/1 "Bricolage Grotesque", system-ui, sans-serif;
   background: var(--chip); padding: .35rem .6rem; border-radius: 4px;
 }
-@media (min-width: 48rem) {
-  .project { grid-template-columns: 15rem 1fr; }
+@media (min-width: 56rem) {
+  .project { grid-template-columns: 20rem 1fr; }
 }
 
 /* About / skills */
