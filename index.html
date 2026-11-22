@@ -10,7 +10,7 @@
     <meta property="og:description" content="Cross-platform desktop apps and Linux system utilities in C and C++.">
     <meta property="og:url" content="https://salazarcodes.com/">
     <meta property="og:image" content="https://salazarcodes.com/imgs/og.png">
-    <meta property="og:image:alt" content="Brayan Mejía Salazar, software developer. I build apps for Linux, and Windows.">
+    <meta property="og:image:alt" content="Brayan Mejía Salazar, software developer. I build apps for Linux and Windows.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="description" content="Cross-platform desktop apps and Linux system utilities in C and C++. Projects by Brayan Mejía Salazar.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐧</text></svg>">
@@ -23,6 +23,7 @@
       } catch (e) {}
     </script>
     <link rel="stylesheet" href="./styles/index.css">
+    <link rel="stylesheet" href="./styles/terminal.css">
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -84,7 +85,7 @@
 	<article class="project">
 	  <h3><a href="https://github.com/brookiestein/PowerProfilesDaemonGUI">PowerProfilesDaemonGUI</a></h3>
 	  <div>
-	    <p>PowerProfilesDaemonGUI is a graphic user interface (GUI) for the power-profiles-daemon utility that set the active power profile through D-Bus calls.</p>
+	    <p>A graphical interface for power-profiles-daemon that sets the active power profile through D-Bus calls.</p>
 	    <ul class="tags"><li>C++</li><li>Gtkmm</li><li>D-Bus</li><li>CMake</li></ul>
 	  </div>
 	</article>
@@ -124,13 +125,27 @@
 	  <li><a href="https://www.linkedin.com/in/salazarhpp/">LinkedIn</a></li>
 	  <li><a href="./files/Resume.pdf" download>CV (PDF)</a></li>
 	</ul>
+	<p class="hint"><button type="button" id="term-open" class="copy">Open terminal</button> or press <kbd>T</kbd></p>
 	<small>© 2026 Brayan Mejía Salazar</small>
       </footer>
 
     </div>
 
+    <dialog id="term" class="term" aria-label="Terminal">
+      <div class="term-bar">
+	<span>brayan@portfolio: ~</span>
+	<button type="button" id="term-close" aria-label="Close terminal">&times;</button>
+      </div>
+      <div class="term-out" id="term-out" role="log" aria-live="polite"></div>
+      <form class="term-line" id="term-form" autocomplete="off">
+	<label for="term-in">$</label>
+	<input id="term-in" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" enterkeyhint="go">
+      </form>
+    </dialog>
+
     <div id="tip" class="tip" role="tooltip" hidden></div>
 
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/terminal.js" defer></script>
   </body>
 </html>

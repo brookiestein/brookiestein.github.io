@@ -1,0 +1,52 @@
+.term {
+    width: min(46rem, calc(100vw - 2rem));
+    height: min(28rem, calc(100vh - 2rem));
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 .92rem/1.55 ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+}
+.term[open] { display: flex; flex-direction: column; }
+.term::backdrop { background: rgb(0 0 0 / .55); }
+body:has(.term[open]) { overflow: hidden; }
+
+.term-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .35rem .5rem .35rem 1rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted); font-size: .85rem;
+}
+.term-bar button {
+    width: 2.25rem; height: 2.25rem; padding: 0;
+    font-size: 1.4rem; line-height: 1;
+    color: var(--muted); background: none; border: 0; border-radius: 6px; cursor: pointer;
+}
+.term-bar button:hover { color: var(--ink); }
+.term-bar button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.term-out {
+    flex: 1; overflow: auto; padding: .9rem 1rem;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.term-out .echo { color: var(--muted); }
+
+.term-line {
+    display: flex; align-items: center; gap: .6rem;
+    padding: .6rem 1rem; border-top: 1px solid var(--line);
+}
+.term-line:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+.term-line label { color: var(--accent); font-weight: 700; }
+.term-line input {
+    flex: 1; min-width: 0; padding: 0;
+    font: inherit; font-size: 1rem;
+    color: var(--ink); background: transparent; border: 0; outline: none;
+}
+
+.hint { margin: 0 0 1rem; color: var(--muted); font-size: .95rem; }
+.hint .copy { margin-left: 0; }
+kbd {
+    font: 400 .85rem ui-monospace, Menlo, Consolas, monospace;
+    background: var(--chip); padding: .1rem .4rem; border-radius: 4px;
+}
