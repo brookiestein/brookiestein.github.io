@@ -2,20 +2,12 @@
 (() => {
     const el = document.getElementById('typed');
     const cursor = document.querySelector('.cursor');
-    if (!el || !cursor)
+    const i18n = window.I18N;
+    if (!el || !cursor || !i18n)
 	return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const phrases = [
-	'I build apps for Linux and Windows.',
-	'I write Qt and GTK apps that feel native.',
-	'I lock down networks with nftables.',
-	'I audit processes and hunt root causes.',
-	'I run Gentoo with ZFS on root.',
-	'I run Gentoo on musl and LLVM.',
-	'I manage services with systemd.',
-	'I\'m learning to break things, ethically.'
-    ];
+    const phrases = () => i18n.list('phrases');
     const command = tag => `$ grep -l "${tag}" ~/Projects/*`;
 
     const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -53,9 +45,9 @@
 
     async function rotate(t) {
 	await wait(2600);
-	while (t === token) {
-	    p = (p + 1) % phrases.length;
-	    await show(phrases[p], t);
+	while (t === token && phrases().length) {
+	    p = (p + 1) % phrases().length;
+	    await show(phrases()[p], t);
 	    await wait(2600);
 	}
     }
@@ -65,7 +57,7 @@
 	++token;
 	const t = token;
 	if (reduced) {
-	    current = tag ? command(tag) : phrases[p];
+	    current = tag ? command(tag) : phrases()[p];
 	    el.textContent = current;
 	    return;
 	}
@@ -73,8 +65,8 @@
 	if (tag) {
 	    show(command(tag), t);
 	} else {
-	    p = (p + 1) % phrases.length;
-	    show(phrases[p], t).then(() => rotate(t));
+	    p = (p + 1) % phrases().length;
+	    show(phrases()[p], t).then(() => rotate(t));
 	}
     });
 
@@ -110,11 +102,12 @@
 })();
 
 (() => {
+    const i18n = window.I18N;
     const projects = [...document.querySelectorAll('.project')];
     const bar = document.getElementById('filter-status');
     const text = document.getElementById('filter-text');
     const clear = document.getElementById('filter-clear');
-    if (!projects.length || !bar)
+    if (!projects.length || !bar || !i18n)
 	return;
 
     document.querySelectorAll('.tags').forEach(ul => {
@@ -144,7 +137,7 @@
 
 	buttons.forEach(b => b.setAttribute('aria-pressed', String(b.textContent === active)));
 	bar.hidden = !active;
-	text.textContent = active ? `${count} of ${projects.length} projects use ${active}` : '';
+	text.textContent = active ? i18n.t('filterStatus', { count, total: projects.length, tag: active}) : '';
 	document.dispatchEvent(new CustomEvent('filterchange', { detail: { tag: active } }));
     }
 
@@ -164,31 +157,14 @@
 
 (() => {
     const tip = document.getElementById('tip');
-    if (!tip)
+    const i18n = window.I18N;
+    if (!tip || !i18n)
 	return;
-
-    const info = {
-	'C': 'A low-level language that gives direct control over memory and the system.',
-	'C++': 'C with classes, templates and a rich standard library.',
-	'CMake': 'A build system generator for C and C++ projects.',
-	'Meson': 'A fast, modern build system, popular in GTK projects.',
-	'Qt': 'A cross-platform framework for building native desktop apps.',
-	'QtDBus': 'Qt\'s module for talking to other programs over D-Bus.',
-	'Qt Multimedia': 'Qt\'s module for playing audio and video.',
-	'GTK': 'The GNOME toolkit for building desktop interfaces.',
-	'Gtkmm': 'The official C++ bindings for GTK.',
-	'D-Bus': 'The messaging system that lets Linux programs talk to each other and to services.',
-	'nftables': 'The Linux kernel\'s firewall framework, the successor to iptables.',
-	'WireGuard': 'A fast, modern VPN protocol built into the Linux kernel.',
-	'systemd': 'The service manager that starts and supervises daemons on most Linux systems.',
-	'Shell': 'Scripts that automate tasks from the command line.',
-	'Windows': 'QBitMPlayer ships a ready-to-run .exe in its GitHub releases.',
-    };
 
     let target = null;
 
     function show(button) {
-	const message = info[button.textContent];
+	const message = i18n.get('tip.' + button.textContent.trim());
 	if (!message)
 	    return;
 
@@ -245,7 +221,8 @@
 (() => {
     const button = document.getElementById('copy-email');
     const status = document.getElementById('copy-status');
-    if (!button || !status)
+    const i18n = window.I18N;
+    if (!button || !status || !i18n)
 	return;
 
     let timer;
@@ -270,7 +247,7 @@
 	    ta.remove();
 	}
 
-	status.textContent = ok ? 'Copied' : 'Copy failed';
+	status.textContent = i18n.t(ok ? 'copied' : 'copyFailed');
 	clearTimeout(timer);
 	timer = setTimeout(() => { status.textContent = ''; }, 2000);
     });

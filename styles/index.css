@@ -214,3 +214,9 @@ body { transition: background-color .2s, color .2s; }
 .copy:hover { border-color: var(--accent); }
 .copy:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .copy-status { margin-left: .5rem; font-size: .9rem; color: var(--muted); }
+
+.lang-toggle {
+    right: 3.5rem;
+    font: 700 .85rem/1 "Bricolage Grotesque", system-ui, sans-serif;
+    letter-spacing: .02em;
+}

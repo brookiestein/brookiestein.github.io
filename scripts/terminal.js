@@ -1,13 +1,15 @@
 (() => {
+    const i18n = window.I18N;
     const dialog = document.getElementById('term');
     const out = document.getElementById('term-out');
     const form = document.getElementById('term-form');
     const input = document.getElementById('term-in');
     const closeButton = document.getElementById('term-close');
     const openButton = document.getElementById('term-open');
-    if (!dialog || !out || !form || !input || typeof dialog.showModal !== 'function')
+    if (!i18n || !dialog || !out || !form || !input || typeof dialog.showModal !== 'function')
 	return;
 
+    const t = i18n.t;
     const text = el => (el ? el.textContent.trim().replace(/\s+/g, ' ') : '');
     const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
@@ -64,80 +66,82 @@
 
     const commands = {
 	help() {
-	    printAll([
-		'Available commands:',
-		'  ls [projects]      list files or projects',
-		'  cat <file|project> read a file or a project',
-		'  open <project|cv>  open a repo or download the CV',
-		'  grep <tag>         filter the projects by technology',
-		'  theme [dark|light] show or change the color theme',
-		'  whoami, clear, exit',
-		'Tab completes, and the arrow keys browse your history.'
-	    ]);
+	    printAll(i18n.list('term.help'));
 	},
 	ls([arg]) {
 	    if (!arg || arg === '~' || arg === '.')
 		return print([...Object.keys(files), 'cv.pdf', 'projects/'].join('  '));
+
 	    const path = arg.replace(/^(\.\/|~\/)/, '').replace(/\/$/, '');
 	    if (path === 'projects') {
 		print(projects().map(p => p.key + '/').join('  '));
-		return print('Try: cat <project-name>', 'echo');
+		return print(t('term.tryCat'), 'echo');
 	    }
-	    print(`ls: cannot access '${arg}': No such file or directory`);
+
+	    print(t('term.lsNoAccess', { arg }));
 	    const p = path.startsWith('projects/') ? findProject(path.slice(9)) : null;
 	    if (p)
-		print(`Try: cat ${p.key}`, 'echo');
+		print(t('term.tryCatOne', { name: p.key }), 'echo');
 	},
 	cat([arg]) {
 	    if (!arg)
-		return print('cat: missing file operand');
+		return print(t('term.catMissing'));
+
 	    const name = arg.replace(/^(\.\/|~\/|projects\/)/, '').replace(/\/$/, '').toLowerCase();
 	    const file = has(files, name) ? files[name] : has(files, name + '.txt') ? files[name + '.txt'] : null;
 	    if (file)
 		return printAll(file());
+
 	    const p = findProject(name);
 	    if (p)
-		return printAll([p.name, p.desc, 'Tags: ' + p.tags.join(', '), p.url]);
-	    print(`cat: ${arg}: No such file or directory`);
+		return printAll([p.name, p.desc, `${t('term.tags')}: ${p.tags.join(', ')}`, p.url]);
+	    print(t('term.catNone', { arg }));
 	},
 	open([arg]) {
 	    if (!arg)
-		return print('open: missing operand');
+		return print(t('term.openMissing'));
+
 	    if (/^cv(\.pdf)?$/i.test(arg)) {
 		const link = document.querySelector('a[download]');
 		if (!link)
-		    return print('open: cv.pdf: No such file or directory');
+		    return print(t('term.noCv'));
 		link.click();
-		return print('Downloading the CV...');
+		return print(t('term.downloading'));
 	    }
+
 	    const p = findProject(arg.replace(/^projects\//, ''));
 	    if (!p)
-		return print(`open: ${arg}: project not found`);
+		return print(t('term.projectNotFound', { arg }));
 	    window.open(p.url, '_blank', 'noopener');
-	    print(`Opening ${p.url}`);
+	    print(t('term.opening', { url: p.url }));
 	},
 	grep([arg]) {
 	    if (!arg)
-		return print('grep: missing operand');
+		return print(t('term.grepMissing'));
+
 	    const needle = arg.toLowerCase();
 	    const button = [...document.querySelectorAll('.tags button')].find(b => b.textContent.trim().toLowerCase() === needle);
 	    if (!button)
-		return print(`grep: no project uses "${arg}"`);
+		return print(t('term.grepNone', { arg }));
+
 	    if (button.getAttribute('aria-pressed') !== 'true')
 		button.click();
+
 	    dialog.close();
 	    document.getElementById('projects').scrollIntoView();
 	},
 	theme([arg]) {
 	    const now = document.documentElement.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 	    if (!arg)
-		return print(`Current theme: ${now}`);
+		return print(t('term.themeNow', { theme: now }));
+
 	    if (arg !== 'dark' && arg !== 'light')
-		return print('theme: expected "dark" or "light"');
+		return print(t('term.themeBad'));
+
 	    const toggle = document.getElementById('theme-toggle');
 	    if (arg !== now && toggle)
 		toggle.click();
-	    print(`Theme set to ${arg}.`);
+	    print(t('term.themeSet', { theme: arg }));
 	},
 	whoami() {
 	    print(text(document.querySelector('.name')) || 'brayan');
@@ -149,7 +153,7 @@
 	    dialog.close();
 	},
 	sudo() {
-	    print('brayan is not in the sudoers file. This incident will be reported.');
+	    print(t('term.sudo'));
 	}
     };
 
@@ -166,7 +170,7 @@
 	    if (has(commands, cmd))
 		commands[cmd](args);
 	    else
-		print(`${cmd}: command not found. Type "help".`);
+		print(t('term.notFound', { cmd }));
 	}
 	out.scrollTop = out.scrollHeight;
     }
@@ -177,13 +181,13 @@
 	const last = parts.pop().toLowerCase();
 	const first = parts[0];
 
-	const pool = parts.length === 0 ?
-	      Object.keys(commands) :
-	      first === 'theme' ?
-	      ['dark', 'light'] :
-	      first === 'ls' ?
-	      ['projects'] :
-	      [...Object.keys(files), 'cv', ...projects().map(p => p.key)];
+	const pool = parts.length === 0
+	      ? Object.keys(commands)
+	      : first === 'theme'
+	      ? ['dark', 'light']
+	      : first === 'ls'
+	      ? ['projects']
+	      : [...Object.keys(files), 'cv', ...projects().map(p => p.key)];
 
 	const matches = pool.filter(w => w.startsWith(last));
 	if (matches.length === 1) {
@@ -200,7 +204,7 @@
 	    return;
 	dialog.showModal();
 	if (!out.children.length)
-	    printAll(['Welcome. Type "help" to see what you can do.', '']);
+	    printAll([t('term.welcome'), '']);
 	input.focus();
     }
 
