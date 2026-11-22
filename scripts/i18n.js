@@ -1,3 +1,4 @@
+// -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil; -*-
 (() => {
     const supported = ['en', 'es'];
 
@@ -6,6 +7,7 @@
 	    switchLang: 'Switch to Spanish',
 	    cvFile: './files/Resume.pdf',
 	    cvName: 'Brayan-Mejia-Resume.pdf',
+	    cvEvent: 'cv-download-en',
 	    phrases: [
 		'I build apps for Linux and Windows.',
 		'I write Qt and GTK apps that feel native.',
@@ -72,6 +74,7 @@
             switchLang: 'Cambiar a inglés',
 	    cvFile: './files/Curriculum.pdf',
 	    cvName: 'Brayan-Mejia-Curriculum.pdf',
+	    cvEvent: 'cv-download-es',
             darkMode: 'Modo oscuro',
             closeTerminal: 'Cerrar terminal',
             name: 'Brayan Mejía Salazar · República Dominicana',

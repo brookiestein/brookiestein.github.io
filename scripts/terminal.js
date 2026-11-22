@@ -64,6 +64,12 @@
 
     const printAll = lines => lines.forEach(l => print(l));
 
+    // Count the event in GoatCounter if its script is loaded and not blocked.
+    function track(name, title) {
+	if (window.goatcounter && typeof window.goatcounter.count === 'function')
+	    window.goatcounter.count({ path: name, title, event: true });
+    }
+
     const commands = {
 	help() {
 	    printAll(i18n.list('term.help'));
@@ -203,6 +209,7 @@
 	if (dialog.open)
 	    return;
 	dialog.showModal();
+	track('terminal-open', 'Terminal opened');
 	if (!out.children.length)
 	    printAll([t('term.welcome'), '']);
 	input.focus();
