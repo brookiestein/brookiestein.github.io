@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <title>404 · Brayan Mejía Salazar</title>
+    <title data-i18n="notFoundTitle">404 · Brayan Mejía Salazar</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐧</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,13 +20,14 @@
   <body>
     <div class="wrap">
       <header>
-        <p class="name">Error 404 · Page not found</p>
+        <p class="name" data-i18n="notFoundBadge">Error 404 · Page not found</p>
         <h1>xdg-open: no such file or directory<span class="cursor" aria-hidden="true"></span></h1>
-        <p class="lede">The page you’re looking for doesn’t exist or has moved. The projects are still where you left them.</p>
-        <p class="actions"><a class="btn" href="/">Back to home</a></p>
+        <p class="lede" data-i18n="notFoundLede">The page you’re looking for doesn’t exist or has moved. The projects are still where you left them.</p>
+        <p class="actions"><a class="btn" href="/" data-i18n="backHome">Back to home</a></p>
       </header>
     </div>
 
-    <script data-goatcounter="https://salazarcodes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script src="/scripts/i18n.js" defer></script>
+    <script data-goatcounter="https://salazarcodes.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   </body>
 </html>
