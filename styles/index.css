@@ -308,3 +308,130 @@ footer small { color: var(--muted); }
     body, .project, .tags button { transition: none; }
     .project, .cursor { animation: none; }
 }
+
+/* Project details modal */
+body:has(dialog[open]) { overflow: hidden; }
+
+.more-btn {
+    font: 700 .85rem/1 "Bricolage Grotesque", system-ui, sans-serif;
+    color: var(--accent);
+    background: var(--chip);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: .45rem .75rem;
+    cursor: pointer;
+    transition: border-color .15s, background-color .15s, color .15s;
+}
+.more-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--bg);
+}
+.more-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.project .links .sep {
+    margin: 0 .5rem;
+    color: var(--muted);
+}
+
+.modal {
+    width: min(44rem, calc(100vw - 2rem));
+    max-height: min(42rem, calc(100vh - 2rem));
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--ink);
+}
+.modal[open] { display: flex; flex-direction: column; }
+.modal::backdrop { background: rgb(0 0 0 / .55); }
+
+.modal-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .35rem .5rem .35rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font: 400 .85rem/1 "Bricolage Grotesque", system-ui, sans-serif;
+}
+.modal-bar button {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    font-size: 1.4rem;
+    line-height: 1;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.modal-bar button:hover { color: var(--ink); }
+.modal-bar button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.modal-body {
+    flex: 1;
+    overflow: auto;
+    padding: 1.35rem 1.5rem;
+    font: 400 1rem/1.65 "Literata", Georgia, serif;
+}
+
+.modal-head {
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line);
+}
+.modal-head h3 {
+    font: 800 1.65rem/1.15 "Bricolage Grotesque", system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    margin: 0 0 .75rem;
+}
+.modal-head .tags li {
+    font-family: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    font-size: .8rem;
+}
+
+.modal-section code {
+    font: 400 .875em/1.4 ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    background: var(--chip);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: .1em .35em;
+}
+.modal-sections {
+    display: grid;
+    gap: 1.2rem;
+}
+.modal-section {
+    padding: 0;
+    border-top: 0;
+}
+.modal-section h4 {
+    font: 700 .9rem/1.3 "Bricolage Grotesque", system-ui, sans-serif;
+    color: var(--accent);
+    margin: 0 0 .35rem;
+}
+.modal-section p {
+    margin: 0;
+    color: var(--ink);
+}
+
+.modal-foot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: .75rem 1.5rem;
+    border-top: 1px solid var(--line);
+}
+.modal-repo {
+    font-size: .9rem;
+    padding: .65rem 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .more-btn { transition: none; }
+}

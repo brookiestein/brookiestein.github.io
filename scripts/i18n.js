@@ -76,6 +76,45 @@
             shotKillSwitchTables: 'Terminal output of nft list tables showing active vpn_killswitch and connlog tables.',
             shotPpdGui: 'PowerProfilesDaemonGUI window with radio buttons for Power Saver, Balanced, and Performance selected.',
             shotPpdCli: 'Terminal output of powerprofilesgui --help and -a alongside a desktop notification showing Active profile: performance.',
+            learnMore: 'Learn more',
+            projectDetails: 'Project overview',
+            closeModal: 'Close project details',
+            viewSource: 'View source on GitHub',
+            modalProblem: 'Why it exists',
+            modalSolution: 'What it does',
+            modalArch: 'Architecture',
+            modalDecisions: 'Technical decisions',
+
+            'detail.btscreenlocker': {
+                problem: 'Stepping away from a workstation without locking the screen leaves active sessions exposed, especially in shared or office environments.',
+                solution: 'A background service paired with a device-discovery dialog that monitors a paired phone over Bluetooth and locks the desktop session automatically when the signal drops out of range.',
+                arch: 'Split into a `Qt` GUI setup window that scans nearby devices (displaying name, MAC address, and signal strength in dBm) and a headless background daemon talking to `BlueZ` and the session manager over `QtDBus`.',
+                decisions: 'Using `D-Bus` instead of shell wrappers avoids spawning subprocesses on every polling interval and integrates natively with standard Linux session lockers.'
+            },
+            'detail.qbitmplayer': {
+                problem: 'Many desktop media players carry heavy library indexers, background services, or high memory overhead just to play local playlists or occasional videos.',
+                solution: 'A fast, self-contained playlist player for `Linux` and `Windows` with instant startup, keyboard-friendly transport controls, playlist persistence, and optional video playback.',
+                arch: 'Built in `C++` on top of `Qt` and `Qt Multimedia`, keeping playlist management and playback state decoupled from platform-specific audio and video backends.',
+                decisions: 'Standardizing on `CMake` and `Qt Widgets` preserves native appearance across Linux desktops and `Windows` while allowing standalone `.exe` release builds.'
+            },
+            'detail.spm': {
+                problem: 'Minimal window managers and custom `X11`/`Wayland` setups lack a built-in power dialog, forcing users to run raw `systemctl` commands or pull in heavy desktop-environment packages.',
+                solution: 'A compact power menu styled after `MATE` offering `Hibernate`, `PowerOff`, `Reboot`, `Suspend`, and `Exit` with a configurable countdown timer and direct CLI flags (`-H`, `-p`, `-r`, `-s`, `-d`, `-t`).',
+                arch: 'Written in `C` with `GTK` for the graphical prompt and CLI flag parsing so the same binary works both from keybindings and automated scripts.',
+                decisions: 'Choosing `C` and `Meson` keeps binary size minimal, startup instantaneous, and dependencies restricted to standard `GTK` libraries.'
+            },
+            'detail.vpn-kill-switch': {
+                problem: 'If a VPN tunnel drops or a `WireGuard` handshake stalls, the OS falls back to the physical gateway and silently leaks unencrypted traffic.',
+                solution: 'A strict fail-closed `nftables` ruleset for `ProtonVPN` on `Gentoo` & any Linux distribution that drops all inbound, forwarded, and outbound packets outside the `WireGuard` tunnel.',
+                arch: 'Defines a dedicated `inet` table (`vpn_killswitch`) with default `drop` policies across `input`, `forward`, and `output` chains, allowing only `loopback`, `DHCP`/`NDP` on physical interfaces, and `UDP 51820` to pinned endpoint sets.',
+                decisions: 'Enforcing the rules directly in the kernel `Netfilter` layer via `nftables` sets guarantees zero leaks before user-space daemons start or if a tunnel drops unexpectedly.'
+            },
+            'detail.powerprofilesdaemongui': {
+                problem: 'Switching between `Power Saver`, `Balanced`, and `Performance` profiles on minimal Linux desktops usually requires opening a terminal and running `powerprofilesctl`.',
+                solution: 'A native graphical selector that applies profiles immediately upon selection, paired with a CLI flag (`powerprofilesgui -a`) that prints the active profile and triggers a desktop notification.',
+                arch: 'Written in `C++` with `Gtkmm` for the interface and direct `D-Bus` calls to `power-profiles-daemon` to query and update the active system profile.',
+                decisions: 'Communicating directly over `D-Bus` keeps state synchronized with hardware and system events without parsing CLI text output.'
+            },
 
             'tip.C': 'A low-level language that gives direct control over memory and the system.',
             'tip.C++': 'C with classes, templates and a rich standard library.',
@@ -139,28 +178,28 @@
             name: 'Brayan Mejía Salazar · República Dominicana',
             phrases: [
                 'Creo aplicaciones para Linux y Windows.',
-                'Hago apps Qt y GTK que se sienten nativas.',
+                'Hago apps en Qt y GTK que se sienten nativas.',
                 'Blindo redes con nftables.',
                 'Audito procesos y busco causas raíz.',
                 'Uso Gentoo con ZFS en la raíz.',
                 'Uso Gentoo con musl y LLVM.',
                 'Gestiono servicios con systemd.',
-                'Aprendo a romper cosas, pero con ética.'
+                'Aprendo a romper cosas, con ética.'
             ],
-            lede: 'Programas pequeños y rápidos que hacen una sola cosa bien: un bloqueador de pantalla que reacciona a tu teléfono, un menú de energía, un reproductor de música y un kill switch de VPN. Código abierto, escrito con Qt, GTK y la shell.',
+            lede: 'Programas pequeños y rápidos que hacen bien una sola cosa: un bloqueador de pantalla que reacciona a tu teléfono, un menú de energía, un reproductor de música y un kill switch para VPN. De código abierto, hechos con Qt, GTK y la shell.',
             downloadCv: 'Descargar CV',
             projects: 'Proyectos',
             clear: 'Limpiar',
             filterStatus: '{count} de {total} proyectos usan {tag}',
-            btScreenLocker: 'Un servicio en segundo plano que bloquea tu sesión cuando el Bluetooth de tu teléfono sale del alcance.',
+            btScreenLocker: 'Un servicio en segundo plano que bloquea tu sesión cuando el Bluetooth de tu teléfono queda fuera de alcance.',
             qbit: 'Un reproductor de música ligero con reproducción de video opcional. Disponible para Linux y Windows.',
             downloadWin: 'Descargar para Windows (.exe)',
-            spm: 'Un menú de energía para hibernar, reiniciar, apagar o suspender, con el estilo del de MATE.',
-            killSwitch: 'Un firewall que falla cerrado para ProtonVPN en Gentoo. Si el túnel de WireGuard se cae, todo el tráfico se detiene en lugar de filtrarse.',
+            spm: 'Un menú de energía para hibernar, reiniciar, apagar o suspender el equipo, inspirado en el de MATE.',
+            killSwitch: 'Un firewall de fallo cerrado (fail-closed) para ProtonVPN en Gentoo. Si cae el túnel de WireGuard, todo el tráfico se detiene en lugar de filtrarse.',
             ppd: 'Una interfaz gráfica para power-profiles-daemon que cambia el perfil de energía activo mediante llamadas a D-Bus.',
             about: 'Acerca de',
-            about1: 'Soy estudiante de Ingeniería de Software en la UAPA y llevo cinco años en Telenord, los últimos tres como auditor de calidad, donde aprendí a cuidar el proceso y a buscar la causa de un problema, no solo su síntoma.',
-            about2: 'Uso Linux a diario desde hace más de nueve años. Actualmente curso programas de ciberseguridad y busco puestos de desarrollador, incluidos los remotos.',
+            about1: 'Estudio Ingeniería de Software en la UAPA y llevo cinco años trabajando en Telenord, los últimos tres como auditor de calidad, donde aprendí a cuidar los procesos y a buscar la causa raíz de los problemas, no solo sus síntomas.',
+            about2: 'Uso Linux a diario desde hace más de nueve años. Actualmente me formo en ciberseguridad y busco oportunidades como desarrollador, incluyendo posiciones remotas.',
             platformsDt: 'Plataformas',
             platformsDd: 'Linux, Windows (QBitMPlayer incluye un .exe)',
             languagesDt: 'Lenguajes',
@@ -198,6 +237,45 @@
             shotKillSwitchTables: 'Salida en terminal de nft list tables mostrando las tablas activas vpn_killswitch y connlog.',
             shotPpdGui: 'Ventana de PowerProfilesDaemonGUI con opciones para Power Saver, Balanced y Performance seleccionado.',
             shotPpdCli: 'Salida en terminal de powerprofilesgui --help y -a junto a una notificación de escritorio mostrando Active profile: performance.',
+            learnMore: 'Saber más',
+            projectDetails: 'Detalles del proyecto',
+            closeModal: 'Cerrar detalles del proyecto',
+            viewSource: 'Ver código en GitHub',
+            modalProblem: 'Por qué existe',
+            modalSolution: 'Qué resuelve',
+            modalArch: 'Arquitectura',
+            modalDecisions: 'Decisiones técnicas',
+
+            'detail.btscreenlocker': {
+                problem: 'Alejarse de la computadora sin bloquear la pantalla deja la sesión abierta y expuesta, algo especialmente delicado en oficinas o espacios compartidos.',
+                solution: 'Un servicio en segundo plano con un asistente de vinculación que monitorea tu teléfono por Bluetooth y bloquea la sesión automáticamente en cuanto la señal queda fuera de alcance.',
+                arch: 'Se divide en dos partes: una ventana en `Qt` para escanear dispositivos cercanos (mostrando nombre, dirección `MAC` e intensidad de señal en dBm) y un demonio sin interfaz que se comunica con `BlueZ` y el gestor de sesión a través de `QtDBus`.',
+                decisions: 'Usar `D-Bus` en lugar de scripts externos evita lanzar subprocesos en cada comprobación y se integra de forma nativa con los bloqueadores de sesión habituales en Linux.'
+            },
+            'detail.qbitmplayer': {
+                problem: 'Muchos reproductores de escritorio cargan indexadores pesados, servicios en segundo plano o consumen demasiada memoria para algo tan simple como reproducir listas locales o algún video puntual.',
+                solution: 'Un reproductor rápido y autocontenido para `Linux` y `Windows`, con arranque instantáneo, controles cómodos, guardado de listas de reproducción y soporte opcional de video.',
+                arch: 'Desarrollado en `C++` con `Qt` y `Qt Multimedia`, manteniendo la lógica de listas y reproducción desacoplada de los backends multimedia de cada sistema.',
+                decisions: 'Estandarizar la compilación con `CMake` y `Qt Widgets` garantiza una apariencia nativa tanto en `Linux` como en `Windows`, además de facilitar la generación de ejecutables `.exe` independientes.'
+            },
+            'detail.spm': {
+                problem: 'Los gestores de ventanas minimalistas y entornos personalizados en `X11` o `Wayland` no traen un menú de apagado integrado, lo que obliga a ejecutar comandos de `systemctl` a mano o instalar paquetes pesados de un escritorio completo.',
+                solution: 'Un menú de energía compacto inspirado en `MATE` con opciones para `Hibernate`, `PowerOff`, `Reboot`, `Suspend` y `Exit`, cuenta regresiva configurable y banderas directas desde la terminal (`-H`, `-p`, `-r`, `-s`, `-d`, `-t`).',
+                arch: 'Escrito en `C` con `GTK` para la ventana gráfica y análisis de argumentos por línea de comandos, permitiendo usar el mismo binario tanto desde atajos de teclado como en scripts.',
+                decisions: 'Elegir `C` y `Meson` mantiene el binario diminuto, el arranque inmediato y las dependencias limitadas a las bibliotecas estándar de `GTK`.'
+            },
+            'detail.vpn-kill-switch': {
+                problem: 'Si el túnel VPN se cae o el intercambio de claves de `WireGuard` se interrumpe, el sistema redirige el tráfico por la conexión física y expone tu IP real sin cifrar.',
+                solution: 'Un conjunto de reglas `nftables` de fallo cerrado (`fail-closed`) para `ProtonVPN` en `Gentoo` y cualquier distribución de Linux que bloquea todo el tráfico entrante, reenviado y saliente fuera del túnel de `WireGuard`.',
+                arch: 'Define una tabla `inet` dedicada (`vpn_killswitch`) con política `drop` por defecto en las cadenas `input`, `forward` y `output`, permitiendo únicamente `loopback`, `DHCP`/`NDP` en las interfaces físicas y tráfico `UDP 51820` hacia los servidores configurados.',
+                decisions: 'Aplicar el bloqueo directamente en `Netfilter` dentro del kernel mediante conjuntos de `nftables` evita cualquier fuga antes de que arranquen los servicios de usuario o si el túnel cae de golpe.'
+            },
+            'detail.powerprofilesdaemongui': {
+                problem: 'Cambiar entre los perfiles `Power Saver`, `Balanced` y `Performance` en escritorios minimalistas de Linux suele obligar a abrir una terminal y ejecutar `powerprofilesctl`.',
+                solution: 'Un selector gráfico nativo que aplica el perfil al instante al elegirlo, acompañado de la opción `powerprofilesgui -a` para consultar el perfil activo desde la terminal y lanzar una notificación de escritorio.',
+                arch: 'Escrito en `C++` con `Gtkmm` para la interfaz y llamadas directas por `D-Bus` hacia `power-profiles-daemon` para leer y cambiar el perfil activo del sistema.',
+                decisions: 'Hablar directamente por `D-Bus` mantiene el estado sincronizado con los eventos del hardware y del sistema sin depender de analizar la salida de texto de comandos externos.'
+            },
 
             'tip.C': 'Un lenguaje de bajo nivel que da control directo sobre la memoria y el sistema.',
             'tip.C++': 'C con clases, plantillas y una biblioteca estándar muy completa.',

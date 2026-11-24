@@ -63,6 +63,7 @@
                         </div>
                         <p data-i18n="btScreenLocker">A background service that locks your session when your phone’s Bluetooth moves out of range.</p>
                         <ul class="tags"><li>C++</li><li>Qt</li><li>QtDBus</li><li>CMake</li></ul>
+                        <p class="links"><button type="button" class="more-btn" data-project="btscreenlocker" data-i18n="learnMore">Learn more</button></p>
                     </div>
                 </article>
 
@@ -79,7 +80,11 @@
                         </div>
                         <p data-i18n="qbit">A lightweight music player with optional video playback. Available for Linux and Windows.</p>
                         <ul class="tags"><li>C++</li><li>Qt</li><li>Qt Multimedia</li><li>CMake</li><li>Windows</li></ul>
-                        <p class="links"><a href="https://github.com/brookiestein/QBitMPlayer/releases/latest" target="_blank" rel="noopener" data-goatcounter-click="download-qbitmplayer-windows" data-i18n="downloadWin">Download for Windows (.exe)</a></p>
+                        <p class="links">
+                            <button type="button" class="more-btn" data-project="qbitmplayer" data-i18n="learnMore">Learn more</button>
+                            <span class="sep" aria-hidden="true">·</span>
+                            <a href="https://github.com/brookiestein/QBitMPlayer/releases/latest" target="_blank" rel="noopener" data-goatcounter-click="download-qbitmplayer-windows" data-i18n="downloadWin">Download for Windows (.exe)</a>
+                        </p>
                     </div>
                 </article>
 
@@ -96,6 +101,7 @@
                         </div>
                         <p data-i18n="spm">A power menu to hibernate, reboot, shut down or suspend, styled after the one in MATE.</p>
                         <ul class="tags"><li>C</li><li>GTK</li><li>Meson</li></ul>
+                        <p class="links"><button type="button" class="more-btn" data-project="spm" data-i18n="learnMore">Learn more</button></p>
                     </div>
                 </article>
 
@@ -112,6 +118,7 @@
                         </div>
                         <p data-i18n="killSwitch">A fail-closed firewall for ProtonVPN on Gentoo. If the WireGuard tunnel drops, all traffic stops instead of leaking.</p>
                         <ul class="tags"><li>nftables</li><li>WireGuard</li><li>systemd</li><li>Shell</li></ul>
+                        <p class="links"><button type="button" class="more-btn" data-project="vpn-kill-switch" data-i18n="learnMore">Learn more</button></p>
                     </div>
                 </article>
 
@@ -128,6 +135,7 @@
                         </div>
                         <p data-i18n="ppd">A graphical interface for power-profiles-daemon that sets the active power profile through D-Bus calls.</p>
                         <ul class="tags"><li>C++</li><li>Gtkmm</li><li>D-Bus</li><li>CMake</li></ul>
+                        <p class="links"><button type="button" class="more-btn" data-project="powerprofilesdaemongui" data-i18n="learnMore">Learn more</button></p>
                     </div>
                 </article>
             </section>
@@ -184,6 +192,23 @@
             </form>
         </dialog>
 
+        <dialog id="project-modal" class="modal" aria-labelledby="pm-title">
+            <div class="modal-bar">
+                <span id="pm-label" data-i18n="projectDetails">Project overview</span>
+                <button type="button" id="pm-close" aria-label="Close" data-i18n-attr="aria-label:closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="pm-body">
+                <div class="modal-head">
+                    <h3 id="pm-title"></h3>
+                    <ul class="tags" id="pm-tags"></ul>
+                </div>
+                <div class="modal-sections" id="pm-sections"></div>
+            </div>
+            <div class="modal-foot">
+                <a class="btn modal-repo" id="pm-repo" href="#" target="_blank" rel="noopener" data-i18n="viewSource">View source on GitHub</a>
+            </div>
+        </dialog>
+
         <div id="tip" class="tip" role="tooltip" hidden></div>
 
         <script src="./scripts/i18n.js" defer></script>
@@ -194,6 +219,7 @@
         <script src="./scripts/tooltip.js" defer></script>
         <script src="./scripts/copy-email.js" defer></script>
         <script src="./scripts/terminal.js" defer></script>
+        <script src="./scripts/project-modal.js" defer></script>
         <script data-goatcounter="https://salazarcodes.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
     </body>
 </html>
